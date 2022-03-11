@@ -1,0 +1,79 @@
+﻿@model IEnumerable<WebMVC.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Clientes</h1>
+
+<p>
+    <a asp-action="Create">Criar nova</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PessoaTipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                <label>CPF/CNPJ</label>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Celular)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FotoPerfil)
+            </th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PessoaTipo)
+            </td>
+            <td>
+                    @if (item.PessoaTipo == PessoaTipoEnum.Fisica ) {  
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.NomeFantasia)
+                    }
+                </td>
+
+            <td>
+                @if (item.PessoaTipo == PessoaTipoEnum.Fisica ) {  
+                        @Html.DisplayFor(modelItem => item.CPF)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.CNPJ)
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Celular)
+            </td>
+          
+            <td>
+                <img src="@item.FotoPerfil" height="100" width="100"/>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
